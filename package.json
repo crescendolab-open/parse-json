@@ -1,0 +1,49 @@
+{
+  "name": "@crescendolab/parse-json",
+  "description": "A user-friendly wrapper for JSON.parse().",
+  "keywords": [
+    "json",
+    "typescript"
+  ],
+  "homepage": "https://github.com/crescendolab-open/parse-json",
+  "bugs": {
+    "url": "https://github.com/crescendolab-open/parse-json/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Crescendo lab",
+    "url": "https://github.com/crescendolab-open"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "test": "run-p test:*",
+    "test:js": "vitest",
+    "test:type": "vitest typecheck"
+  },
+  "dependencies": {
+    "type-fest": "3.x"
+  },
+  "devDependencies": {
+    "@tsconfig/node18-strictest-esm": "1.x",
+    "@types/parse-json": "4.x",
+    "json5": "2.x",
+    "npm-run-all": "4.x",
+    "parse-json": "6.x",
+    "tsafe": "1.x",
+    "typescript": "4.x",
+    "unbuild": "1.x",
+    "vitest": "^0.28.3"
+  }
+}

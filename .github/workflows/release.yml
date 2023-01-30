@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - experimental
+    tags:
+      - v*.*.*
+      - v*.*.*-*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: pnpm install
+      - id: version
+        uses: VdustR/semver-action@v0
+      - name: Build
+        run: pnpm build
+      - run: pnpm pkg set version=${{ steps.version.outputs.version }}
+      - run: pnpm publish --no-git-checks --access public --tag ${{ steps.version.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
