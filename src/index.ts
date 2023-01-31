@@ -113,6 +113,4 @@ const create: CreateParser = function createParser<DefaultFallback>(
 } as CreateParser;
 
 const defaultParser = create();
-const parseJson = Object.assign(defaultParser, { create });
-
-export default parseJson;
+export const parseJson = Object.assign(defaultParser, { create });
