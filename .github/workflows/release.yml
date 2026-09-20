@@ -8,19 +8,23 @@ on:
       - v*.*.*
       - v*.*.*-*
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]
+        node-version: [24]
     steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 7
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
@@ -32,6 +36,4 @@ jobs:
       - name: Build
         run: pnpm build
       - run: pnpm pkg set version=${{ steps.version.outputs.version }}
-      - run: pnpm publish --no-git-checks --access public --tag ${{ steps.version.outputs.tag }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --access public --tag ${{ steps.version.outputs.tag }}
